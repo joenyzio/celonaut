@@ -1,38 +1,47 @@
-# Ethernaut
+# Celonaut
 
-<p>Ethernaut is a Web3/Solidity based wargame inspired in <a href="https://overthewire.org" target="_blank" rel="noopener noreferrer">overthewire.org</a>, to be played in the Ethereum Virtual Machine. Each level is a smart contract that needs to be 'hacked'.</p>
+<p>Celonaut is a Web3/Solidity based game forked from [ethernaut.openzeppelin.com](https://ethernaut.openzeppelin.com), to be played on Celo. Each level is a smart contract that needs to be 'hacked'.</p>
 
-The game acts both as a tool for those interested in learning ethereum, and as a way to catalogue historical hacks in levels. Levels can be infinite and the game does not require to be played in any particular order.
+The game acts both as a tool for those interested in learning Celo, and as a way to catalogue historical hacks in levels. Levels can be infinite and the game does not require to be played in any particular order.
 
-*Level PR's are welcome!*
+_Level PR's are welcome!_
 
 ### Deployed Versions
 
-You can find the current, official version at:
+You can find the current, official version originally built for Celo at:
 [ethernaut.openzeppelin.com](https://ethernaut.openzeppelin.com)
 
 ### Running locally (local network)
 
 1. Install
+
 ```
-git clone git@github.com:OpenZeppelin/ethernaut.git
+git clone https://github.com/joenyzio/celonaut.git
 yarn install
 ```
+
 2. Start deterministic rpc
+
 ```
 yarn network
 ```
+
 3. You might want to import one of the private keys from ganache-cli to your Metamask wallet.
 4. Compile contracts
+
 ```
 yarn compile:contracts
 ```
+
 5. Set client/src/constants.js ACTIVE_NETWORK to NETWORKS.LOCAL
 6. Deploy contracts
+
 ```
 yarn deploy:contracts
 ```
-7. Start Ethernaut locally
+
+7. Start Celonaut locally
+
 ```
 yarn start:ethernaut
 ```
@@ -41,8 +50,7 @@ yarn start:ethernaut
 
 The same as using the local network but steps 2, 3 and 6 are not necessary.
 
-In this case, replace point 5 with:
-5. Set client/src/constants.js ACTIVE_NETWORK to NETWORKS.ROPSTEN
+In this case, replace point 5 with: 5. Set client/src/constants.js ACTIVE_NETWORK to NETWORKS.ROPSTEN
 
 ### Running tests
 
@@ -58,15 +66,15 @@ yarn build:ethernaut
 
 ### Level development
 
-*A level is composed of the following elements:*
+_A level is composed of the following elements:_
 
-* A `level factory` contract that needs to extend Level.sol. This factory contract will be deployed only once and registered on Ethernaut.sol by Ethernaut's owner. Players never interact with the factory directly. The factory is in charge of creating level instances for players to use (1 instance per player) and to check these instances to verify if the player has beat the level. Factories should not have state that can be changed by the player.
-* A `level instance` contract that is emitted by the factory for each player that requests it. Instances need to be completely decouppled from Ethernaut's architecture. Factories will emit them and verify them. That is, level instances don't know anything about their factories or Ethernaut. An instance's state can be completely demolished by players and even destroyed since they are not really part of the architecture, just a challenge for a player to use at will.
-* A `description file` in client/gamedata/descriptions that the UI presents to the player and describes the level's objectives with some narrative and tips.
-* A `description completion file` also in client/gamedata/descriptions that the UI presents to the player when the level is beaten, that presents further information about the player, historical insights, further explanations or just a congrats message.
-* A `tests file` in contracts/test/levels that performs unit tests on the level.
-* A `json entry` for the level in client/gamedata/gamedata.json that appends metadata to the level. The UI uses this metadata to display the level's title, difficulty, etc, but also to determine if sources are shown, the default gas for the creation of an instance, etc. NOTE: "deployId" must be unique and is also used by the deployment script.
-* Optionally, an `author entry` at client/gamedata/authors.json. You can specify opt-in information about yourself in this file.
+- A `level factory` contract that needs to extend Level.sol. This factory contract will be deployed only once and registered on Ethernaut.sol by Ethernaut's owner. Players never interact with the factory directly. The factory is in charge of creating level instances for players to use (1 instance per player) and to check these instances to verify if the player has beat the level. Factories should not have state that can be changed by the player.
+- A `level instance` contract that is emitted by the factory for each player that requests it. Instances need to be completely decouppled from Ethernaut's architecture. Factories will emit them and verify them. That is, level instances don't know anything about their factories or Ethernaut. An instance's state can be completely demolished by players and even destroyed since they are not really part of the architecture, just a challenge for a player to use at will.
+- A `description file` in client/gamedata/descriptions that the UI presents to the player and describes the level's objectives with some narrative and tips.
+- A `description completion file` also in client/gamedata/descriptions that the UI presents to the player when the level is beaten, that presents further information about the player, historical insights, further explanations or just a congrats message.
+- A `tests file` in contracts/test/levels that performs unit tests on the level.
+- A `json entry` for the level in client/gamedata/gamedata.json that appends metadata to the level. The UI uses this metadata to display the level's title, difficulty, etc, but also to determine if sources are shown, the default gas for the creation of an instance, etc. NOTE: "deployId" must be unique and is also used by the deployment script.
+- Optionally, an `author entry` at client/gamedata/authors.json. You can specify opt-in information about yourself in this file.
 
 #### Example level development: King
 
@@ -86,9 +94,9 @@ Let's suppose that we are creating the level "King" (which is already created an
 
 ### Build
 
- ```
- yarn build:ethernaut
- ```
+```
+yarn build:ethernaut
+```
 
 ### Deployment
 
@@ -108,15 +116,16 @@ Then run `yarn deploy:contracts`. This action will effectively deploy a new vers
 
 To modify or add a new language to the list of supported ones follow these steps:
 
-1. under `client/src/gamedata` create a new folder with the languge you want to add. 
+1. under `client/src/gamedata` create a new folder with the languge you want to add.
 
 2. Copy paste the content you want to translate of any other language into the new directory.
 
 3. You will need to translate two things:
-  - pages and level descriptions under `descriptions` subdirectory
-  - `strings.json`. For this, only the values of the keys in the json must be translated. Do not translate keys (i.e. `nextLevel`).
 
-4. If you are just modifying an already existing language you can stop here and submit a PR. If you're adding a new language go to the next steps. Translations are mantained by the community but we ask to translate at least the `Help` page, the `strings.json` and the `instances.md` and `instances_complete.md` files entirely since those are the most important ones to understand how the game works. Levels which are not translated will default to English in any case. 
+- pages and level descriptions under `descriptions` subdirectory
+- `strings.json`. For this, only the values of the keys in the json must be translated. Do not translate keys (i.e. `nextLevel`).
+
+4. If you are just modifying an already existing language you can stop here and submit a PR. If you're adding a new language go to the next steps. Translations are mantained by the community but we ask to translate at least the `Help` page, the `strings.json` and the `instances.md` and `instances_complete.md` files entirely since those are the most important ones to understand how the game works. Levels which are not translated will default to English in any case.
 
 5. Add a new key/value in all `strings.json` of all languages for the newly added language. For example, if you're going to add French, add
 
@@ -136,6 +145,7 @@ In `es/strings.json` add:
   ...
 }
 ```
+
 And so on with all other languages present.
 
 6. Once translation is done, add an entry in `client/src/containers/Headers.js` in the language picker for the user interface so you can select your added language:
