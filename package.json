@@ -1,4 +1,5 @@
 {
+  "homepage": "http://joenyzio.github.io/client/build/",
   "private": true,
   "workspaces": {
     "packages": [
